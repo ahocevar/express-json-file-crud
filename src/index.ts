@@ -6,7 +6,7 @@ function generateStoragePathForEntity(entityName: string, storagePath: string) {
     return `${storagePath}/${entityName}.json`;
 }
 
-function setupStorage(entityName: string, storagePath: string, callback: (success: boolean) => void) {
+export function setupStorage(entityName: string, storagePath: string, callback: (success: boolean) => void) {
     const fullPath = generateStoragePathForEntity(entityName, storagePath);
     fs.readdir(fullPath, (err, files) => {
         if (err.errno === -2) {
@@ -26,7 +26,7 @@ function setupStorage(entityName: string, storagePath: string, callback: (succes
     });
 }
 
-function loadEntitiesFromStorage(entityName: string, storagePath: string, callback: (entities: any[]) => void): void {
+export function loadEntitiesFromStorage(entityName: string, storagePath: string, callback: (entities: any[]) => void): void {
     fs.readFile(generateStoragePathForEntity(entityName, storagePath), (err, content) => {
         if (err) {
             console.error(`Error loading entities '${entityName} from storage '${storagePath}:`);
@@ -51,7 +51,7 @@ function loadEntitiesFromStorage(entityName: string, storagePath: string, callba
     })
 }
 
-function storeEntitiesToStorage(entities: any[], entityName: string, storagePath: string, callback: () => void) {
+export function storeEntitiesToStorage(entities: any[], entityName: string, storagePath: string, callback: () => void) {
     const fullPath = generateStoragePathForEntity(entityName, storagePath);
     fs.writeFile(fullPath, JSON.stringify(entities), err => {
         if (err) {
@@ -62,7 +62,7 @@ function storeEntitiesToStorage(entities: any[], entityName: string, storagePath
     });
 }
 
-function generateObjectId(id: number | null, entities: any[]) {
+export function generateObjectId(id: number | null, entities: any[]) {
     if (id == null) {
         id = 0;
     }
